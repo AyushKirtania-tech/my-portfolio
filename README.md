@@ -1,36 +1,217 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ayush Kirtania - Portfolio Website
 
-## Getting Started
+A modern, responsive portfolio website built with Next.js 15, React, MongoDB, and Tailwind CSS.
 
-First, run the development server:
+![Portfolio Preview](https://via.placeholder.com/1200x600/2563eb/ffffff?text=Ayush+Kirtania+Portfolio)
 
+## 🚀 Features
+
+- **Modern Design**: Clean, professional design with smooth animations using Framer Motion
+- **Fully Responsive**: Optimized for all devices (mobile, tablet, desktop)
+- **SEO Optimized**: Meta tags, structured data, and semantic HTML
+- **Contact Form**: Integrated with MongoDB for storing messages
+- **Fast Performance**: Built with Next.js 15 for optimal loading speeds
+- **Accessibility**: WCAG compliant with proper ARIA labels and keyboard navigation
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15, React 19, Tailwind CSS 4
+- **Backend**: Next.js API Routes
+- **Database**: MongoDB
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Deployment**: Vercel
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have:
+- Node.js 18+ installed
+- npm or yarn package manager
+- MongoDB database (local or MongoDB Atlas)
+
+## ⚙️ Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ayushkirtania/portfolio.git
+   cd portfolio
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Set up environment variables**
+   
+   Create a `.env.local` file in the root directory:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   ```
+
+   To get your MongoDB URI:
+   - **Option 1 (MongoDB Atlas - Recommended)**:
+     1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+     2. Create a free account and cluster
+     3. Click "Connect" → "Connect your application"
+     4. Copy the connection string
+     5. Replace `<password>` with your database password
+   
+   - **Option 2 (Local MongoDB)**:
+     ```
+     MONGODB_URI=mongodb://localhost:27017/portfolio
+     ```
+
+4. **Add your profile image**
+   
+   Place your profile photo in the `public` folder as `profile.jpg`
+
+5. **Update personal information**
+   
+   The components already have your information, but you can customize:
+   - Social media links in `Contact.jsx`
+   - GitHub repository links in `Projects.jsx`
+   - Any other personal details as needed
+
+## 🚀 Running the Application
+
+### Development Mode
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Production Build
+```bash
+npm run build
+npm start
+# or
+yarn build
+yarn start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+```
+portfolio/
+├── app/
+│   ├── api/
+│   │   └── contact/
+│   │       └── route.js          # Contact form API endpoint
+│   ├── components/
+│   │   ├── About.jsx              # About section
+│   │   ├── Contact.jsx            # Contact form & info
+│   │   ├── Hero.jsx               # Hero/landing section
+│   │   ├── Navbar.jsx             # Navigation bar
+│   │   ├── Projects.jsx           # Projects showcase
+│   │   └── Skills.jsx             # Skills & expertise
+│   ├── globals.css                # Global styles
+│   ├── layout.js                  # Root layout with metadata
+│   └── page.js                    # Main page component
+├── lib/
+│   └── mongodb.js                 # MongoDB connection
+├── public/
+│   ├── profile.jpg                # Your profile photo
+│   ├── Ayush_Kirtania_CV.pdf     # Your resume/CV
+│   └── [other assets]
+├── .env.local                     # Environment variables (create this)
+├── .gitignore
+├── package.json
+└── README.md
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🎨 Customization
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Colors
+The color scheme uses Tailwind CSS. Main colors:
+- Primary: Blue (`blue-600`)
+- Secondary: Indigo (`indigo-600`)
+- Accent: Purple (`purple-600`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To change colors, update the gradient classes in the components.
 
-## Deploy on Vercel
+### Content
+Update content in the respective component files:
+- **Hero.jsx**: Main headline, tagline
+- **About.jsx**: Bio, achievements, highlights
+- **Projects.jsx**: Project details, links, tech stack
+- **Skills.jsx**: Skills list, proficiency levels
+- **Contact.jsx**: Contact information, social links
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### SEO
+Update metadata in `layout.js` and `page.js`:
+- Title, description, keywords
+- Open Graph tags
+- Twitter card data
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Go to [Vercel](https://vercel.com)
+3. Import your repository
+4. Add environment variables:
+   - `MONGODB_URI`: Your MongoDB connection string
+5. Deploy!
+
+Your site will be live at `https://your-project.vercel.app`
+
+### Deploy to Other Platforms
+
+The app can also be deployed to:
+- **Netlify**: Configure build command as `npm run build`
+- **Railway**: Add MongoDB URI to environment variables
+- **DigitalOcean App Platform**: Follow Next.js deployment guide
+
+## 📝 Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `MONGODB_URI` | MongoDB connection string | Yes |
+
+## 🐛 Troubleshooting
+
+### MongoDB Connection Issues
+- Ensure your IP address is whitelisted in MongoDB Atlas
+- Check if the connection string is correct
+- Verify network access settings
+
+### Build Errors
+- Clear `.next` folder: `rm -rf .next`
+- Delete `node_modules` and reinstall: `rm -rf node_modules && npm install`
+- Check Node.js version (should be 18+)
+
+### Styling Issues
+- Clear Tailwind cache if styles don't update
+- Check if all Tailwind classes are valid
+- Ensure `globals.css` is imported correctly
+
+## 📧 Contact
+
+**Ayush Kirtania**
+- Email: ayushkirtania@gmail.com
+- Phone: +91 9123021927
+- Location: Panihati, Kolkata, West Bengal, India
+- GitHub: [@ayushkirtania](https://github.com/ayushkirtania)
+- LinkedIn: [ayushkirtania](https://linkedin.com/in/ayushkirtania)
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🙏 Acknowledgments
+
+- Built with [Next.js](https://nextjs.org/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Animated with [Framer Motion](https://www.framer.com/motion/)
+- Icons from [Lucide](https://lucide.dev/)
+
+---
+
+⭐ If you found this helpful, please consider giving it a star on GitHub!
