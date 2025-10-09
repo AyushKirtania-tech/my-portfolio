@@ -1,23 +1,42 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    const stored = localStorage.getItem('theme');
+    if (stored) {
+      setTheme(stored);
+      document.documentElement.classList.toggle('dark', stored === 'dark');
+    } else {
+      // prefer dark if user system prefers
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark', prefersDark);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    localStorage.setItem('theme', next);
+  };
+
   const navItems = [
-    { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
-    { name: 'Projects', href: '#projects' },
+    { name: 'Work', href: '#projects' },
     { name: 'Skills', href: '#skills' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -25,17 +44,12 @@ export default function Navbar() {
   const handleNavClick = (e, href) => {
     e.preventDefault();
     setIsOpen(false);
-    
     const element = document.querySelector(href);
     if (element) {
       const offset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
   };
 
@@ -43,48 +57,55 @@ export default function Navbar() {
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-lg'
-          : 'bg-white/80 backdrop-blur-sm shadow-sm'
+          ? 'bg-white/80 dark:bg-slate-900/70 backdrop-blur-md shadow-sm py-3'
+          : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          {/* Logo */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center">
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, '#home')}
-            className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent hover:from-blue-700 hover:to-indigo-700 transition-all"
+            className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white"
+            aria-label="Home - Ayush Kirtania"
           >
-            Ayush Kirtania
+            <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-400">
+              AK
+            </span>
           </a>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="text-gray-700 hover:text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition-all font-medium"
+                className="text-sm uppercase tracking-wider text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 {item.name}
               </a>
             ))}
+
             <a
               href="/Ayush_Kirtania_CV.pdf"
               download
-              className="ml-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg font-medium"
+              className="inline-flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-full text-sm hover:bg-black transition"
             >
               Resume
             </a>
+
+            <button
+              aria-label="Toggle theme"
+              onClick={toggleTheme}
+              className="p-2 rounded-full border border-gray-200 dark:border-slate-700"
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-            aria-controls="mobile-menu"
-            aria-expanded={isOpen}
+            className="md:hidden p-2 text-gray-900 dark:text-white"
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -92,19 +113,16 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile */}
       {isOpen && (
-        <div
-          id="mobile-menu"
-          className="md:hidden bg-white border-t border-gray-100 shadow-lg"
-        >
-          <div className="px-4 pt-2 pb-4 space-y-1">
+        <div className="md:hidden fixed inset-0 bg-white dark:bg-slate-900 z-40 pt-24 px-8">
+          <div className="space-y-6">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors font-medium"
+                className="block text-2xl font-bold text-gray-900 dark:text-white"
               >
                 {item.name}
               </a>
@@ -112,10 +130,18 @@ export default function Navbar() {
             <a
               href="/Ayush_Kirtania_CV.pdf"
               download
-              className="block px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg text-center font-medium hover:from-blue-700 hover:to-indigo-700 transition-all mt-2"
+              className="block mt-6 text-lg font-medium text-gray-900 dark:text-white border-t pt-6"
             >
-              Download Resume
+              Resume
             </a>
+            <div className="pt-6">
+              <button
+                onClick={toggleTheme}
+                className="px-4 py-2 rounded-full border"
+              >
+                Toggle theme
+              </button>
+            </div>
           </div>
         </div>
       )}
