@@ -290,7 +290,7 @@ export default function Hero() {
                 Contact
               </motion.a>
               <motion.a
-                href="/Ayush_Kirtania_CV.pdf"
+                href="/Resume/Ayush_Kirtania_CV.pdf"
                 className="btn btn-ghost"
                 download
                 whileHover={{ scale: 1.05 }}
@@ -328,13 +328,11 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.6 }}
       >
-        <motion.div
+        <motion.a
+          href="#about"
           className="flex flex-col items-center gap-2 cursor-pointer"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          onClick={() => {
-            document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
-          }}
         >
           <span className="text-xs text-muted uppercase tracking-wider">Scroll</span>
           <div className="w-6 h-10 border-2 border-muted/30 rounded-full flex justify-center pt-2">
@@ -344,7 +342,7 @@ export default function Hero() {
               transition={{ duration: 1.5, repeat: Infinity }}
             />
           </div>
-        </motion.div>
+        </motion.a>
       </motion.div>
     </section>
   );
