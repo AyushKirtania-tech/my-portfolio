@@ -11,7 +11,7 @@ export default function Projects() {
       description: 'Formula 1 info hub with circuits and race data.',
       tech: ['HTML', 'CSS', 'JS'],
       image: '/projects/F1.png',
-      live: 'https://f1uptodates.netlify.app',
+      live: 'https://f1-up-to-dates.vercel.app/',
       color: 'from-red-500 to-orange-500',
     },
     {
