@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Check, AlertCircle, Mail, MapPin, Sparkles } from 'lucide-react';
+import { Send, Check, AlertCircle, Mail, MapPin, Sparkles, Github, Linkedin, Instagram } from 'lucide-react';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '', phone: '' });
@@ -57,21 +57,13 @@ export default function Contact() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.1 },
     },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
   return (
@@ -79,30 +71,14 @@ export default function Contact() {
       {/* Animated Background Elements */}
       <motion.div
         className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          x: [0, 50, 0],
-          y: [0, -30, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={{ scale: [1, 1.2, 1], x: [0, 50, 0], y: [0, -30, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       <motion.div
         className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-br from-pink-400/10 to-yellow-400/10 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.3, 1],
-          x: [0, -50, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={{ scale: [1, 1.3, 1], x: [0, -50, 0], y: [0, 30, 0] }}
+        transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       <div className="container relative z-10">
@@ -145,8 +121,7 @@ export default function Contact() {
             >
               <h3 className="text-3xl font-bold mb-3">Let's build something together</h3>
               <p className="text-muted">
-                Open to internships & freelance. Tell me about your idea — I usually respond within a
-                few days.
+                Open to internships & freelance. Tell me about your idea — I usually respond within a few days.
               </p>
             </motion.div>
 
@@ -200,7 +175,7 @@ export default function Contact() {
               ))}
             </div>
 
-            {/* Social Links Preview */}
+            {/* Social Links */}
             <motion.div
               className="pt-6"
               variants={itemVariants}
@@ -209,34 +184,48 @@ export default function Contact() {
               viewport={{ once: true }}
             >
               <p className="text-sm text-muted mb-3">Also find me on:</p>
-              <div className="flex gap-3">
-                {['GitHub', 'LinkedIn', 'Twitter'].map((platform, i) => (
-                  <motion.div
+              <div className="flex gap-3 flex-wrap">
+                {[
+                  {
+                    name: 'GitHub',
+                    url: 'https://github.com/AyushKirtania-tech',
+                    icon: Github,
+                    color: 'hover:bg-gray-700 dark:hover:bg-gray-600',
+                  },
+                  {
+                    name: 'LinkedIn',
+                    url: 'https://www.linkedin.com/in/ayush-kirtania-45464021a',
+                    icon: Linkedin,
+                    color: 'hover:bg-blue-600 dark:hover:bg-blue-700',
+                  },
+                  {
+                    name: 'Instagram',
+                    url: 'https://www.instagram.com/punkifiedayush/',
+                    icon: Instagram,
+                    color: 'hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600',
+                  },
+                ].map((platform, i) => (
+                  <motion.a
                     key={i}
-                    className="px-4 py-2 bg-gray-100 dark:bg-slate-800 rounded-full text-sm"
+                    href={platform.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-800 rounded-full text-sm transition-all cursor-pointer ${platform.color}`}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    {platform}
-                  </motion.div>
+                    <platform.icon className="w-4 h-4" />
+                    {platform.name}
+                  </motion.a>
                 ))}
               </div>
             </motion.div>
           </motion.div>
 
           {/* Right Side - Form */}
-          <motion.form
-            variants={itemVariants}
-            className="space-y-5"
-            onSubmit={submit}
-          >
-            {/* Name Field */}
-            <motion.div
-              animate={{
-                scale: focusedField === 'name' ? 1.02 : 1,
-              }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
+          <motion.form variants={itemVariants} className="space-y-5" onSubmit={submit}>
+            {/* Name */}
+            <motion.div animate={{ scale: focusedField === 'name' ? 1.02 : 1 }} transition={{ type: 'spring', stiffness: 300 }}>
               <label className="block text-sm font-medium mb-2" htmlFor="name">
                 Name
               </label>
@@ -253,13 +242,8 @@ export default function Contact() {
               />
             </motion.div>
 
-            {/* Email Field */}
-            <motion.div
-              animate={{
-                scale: focusedField === 'email' ? 1.02 : 1,
-              }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
+            {/* Email */}
+            <motion.div animate={{ scale: focusedField === 'email' ? 1.02 : 1 }} transition={{ type: 'spring', stiffness: 300 }}>
               <label className="block text-sm font-medium mb-2" htmlFor="email">
                 Email
               </label>
@@ -277,13 +261,8 @@ export default function Contact() {
               />
             </motion.div>
 
-            {/* Message Field */}
-            <motion.div
-              animate={{
-                scale: focusedField === 'message' ? 1.02 : 1,
-              }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
+            {/* Message */}
+            <motion.div animate={{ scale: focusedField === 'message' ? 1.02 : 1 }} transition={{ type: 'spring', stiffness: 300 }}>
               <label className="block text-sm font-medium mb-2" htmlFor="message">
                 Message
               </label>
@@ -304,16 +283,10 @@ export default function Contact() {
             {/* Honeypot */}
             <div style={{ display: 'none' }} aria-hidden="true">
               <label htmlFor="phone">Phone</label>
-              <input
-                id="phone"
-                name="phone"
-                value={form.phone}
-                onChange={handleChange('phone')}
-                tabIndex={-1}
-              />
+              <input id="phone" name="phone" value={form.phone} onChange={handleChange('phone')} tabIndex={-1} />
             </div>
 
-            {/* Submit Button */}
+            {/* Submit */}
             <div className="space-y-4">
               <motion.button
                 type="submit"
@@ -362,11 +335,7 @@ export default function Contact() {
                     exit={{ opacity: 0, y: -10 }}
                     className="flex items-center gap-2 text-green-500 bg-green-50 dark:bg-green-900/20 p-4 rounded-lg"
                   >
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: 'spring', stiffness: 500 }}
-                    >
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500 }}>
                       <Check className="w-5 h-5" />
                     </motion.div>
                     Message sent — thank you!
