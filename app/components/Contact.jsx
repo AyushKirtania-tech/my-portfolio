@@ -67,7 +67,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="section relative overflow-hidden">
+    <>
       {/* Animated Background Elements */}
       <motion.div
         className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"
@@ -358,6 +358,6 @@ export default function Contact() {
           </motion.form>
         </motion.div>
       </div>
-    </section>
+    </>
   );
 }

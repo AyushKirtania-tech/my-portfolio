@@ -7,6 +7,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
+import SectionWrapper from './components/SectionWrapper';
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
@@ -46,7 +47,6 @@ export default function HomePage() {
       >
         <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-30 blur-sm" />
       </motion.div>
-
       <motion.div
         className="fixed w-2 h-2 pointer-events-none z-[9999] hidden lg:block"
         style={{
@@ -62,11 +62,39 @@ export default function HomePage() {
       <Navbar />
 
       <main className="relative">
-        <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Contact />
+        {/* Hero stays in a normal section, as it has its own animations */}
+        <section id="home">
+          <Hero />
+        </section>
+        
+        {/* Replaced <section> with <SectionWrapper> */}
+        <SectionWrapper 
+          id="about" 
+          className="py-24 bg-gray-50 dark:bg-slate-900 relative overflow-hidden"
+        >
+          <About />
+        </SectionWrapper>
+        
+        <SectionWrapper 
+          id="projects" 
+          className="section bg-transparent relative overflow-hidden"
+        >
+          <Projects />
+        </SectionWrapper>
+        
+        <SectionWrapper 
+          id="skills" 
+          className="py-24 bg-gray-50 dark:bg-slate-900 relative overflow-hidden"
+        >
+          <Skills />
+        </SectionWrapper>
+        
+        <SectionWrapper 
+          id="contact" 
+          className="section relative overflow-hidden"
+        >
+          <Contact />
+        </SectionWrapper>
       </main>
 
       {/* Enhanced Footer */}

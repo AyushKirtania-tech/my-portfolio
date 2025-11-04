@@ -48,7 +48,7 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="section bg-transparent relative overflow-hidden">
+    <>
       {/* Background Decorative Elements */}
       <motion.div
         className="absolute top-20 right-0 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"
@@ -131,7 +131,7 @@ export default function Projects() {
           </motion.a>
         </motion.div>
       </div>
-    </section>
+    </>
   );
 }
 
@@ -248,15 +248,18 @@ function ProjectCard({ project, index }) {
           </motion.a>
         </motion.div>
 
-        {/* Corner Accent */}
+        {/* Replaced corner accent with animated icon */}
         <motion.div
-          className="absolute top-4 right-4 w-12 h-12 border-2 border-white/50 rounded-lg"
+          className="absolute top-4 right-4 text-white/70"
           animate={{
-            rotate: isHovered ? 45 : 0,
-            scale: isHovered ? 1.2 : 1,
+            x: isHovered ? -4 : 0,
+            y: isHovered ? 4 : 0,
+            opacity: isHovered ? 1 : 0,
           }}
-          transition={{ duration: 0.4 }}
-        />
+          transition={{ duration: 0.3 }}
+        >
+          <ArrowUpRight className="w-6 h-6" />
+        </motion.div>
       </div>
 
       {/* Content */}

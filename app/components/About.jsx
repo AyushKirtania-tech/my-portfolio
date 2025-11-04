@@ -44,7 +44,7 @@ export default function About() {
   };
 
   return (
-    <section id="about" className="py-24 bg-gray-50 dark:bg-slate-900 relative overflow-hidden">
+    <>
       {/* Animated Background Pattern */}
       <motion.div
         className="absolute inset-0 opacity-5"
@@ -97,12 +97,14 @@ export default function About() {
                 }}
               />
 
+              {/* Removed `transform rotate-3` for a cleaner 3D tilt */}
               <motion.div
-                className="rounded-2xl overflow-hidden border-4 border-gray-900 dark:border-slate-700 transform rotate-3 relative z-10"
-                whileHover={{ rotate: 0, scale: 1.02 }}
+                className="rounded-2xl overflow-hidden border-4 border-gray-900 dark:border-slate-700 relative z-10"
+                whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.4 }}
               >
-                <div className="bg-gray-900 h-96 flex items-center justify-center -rotate-3 relative overflow-hidden">
+                {/* Removed counter-rotation `-rotate-3` */}
+                <div className="bg-gray-900 h-96 flex items-center justify-center relative overflow-hidden">
                   <motion.img
                     src="/Profile_pic.jpeg"
                     alt="Ayush"
@@ -112,6 +114,7 @@ export default function About() {
                     }}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.6 }}
+                    style={{ transformStyle: 'preserve-3d' }} 
                   />
 
                   {/* Image Overlay Effect */}
@@ -292,6 +295,6 @@ export default function About() {
           </motion.div>
         </div>
       </div>
-    </section>
+    </>
   );
 }

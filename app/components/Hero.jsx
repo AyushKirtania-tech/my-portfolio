@@ -9,6 +9,11 @@ export default function Hero() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
+  // Added more pronounced parallax for background orbs
+  const yOrbs = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const yOrbsSlow = useTransform(scrollYProgress, [0, 1], [0, 100]);
+
+
   const springConfig = { stiffness: 150, damping: 15 };
   const x = useSpring(useTransform(scrollYProgress, [0, 1], [0, -50]), springConfig);
 
@@ -68,6 +73,7 @@ export default function Hero() {
           background: 'linear-gradient(90deg,#7c3aed,#fb7185)',
           x: mousePosition.x * 0.5,
           y: mousePosition.y * 0.5,
+          translateY: yOrbs, // Added parallax
         }}
         animate={{
           scale: [1, 1.1, 1],
@@ -86,6 +92,7 @@ export default function Hero() {
           background: 'linear-gradient(90deg,#f59e0b,#ec4899)',
           x: mousePosition.x * -0.3,
           y: mousePosition.y * -0.3,
+          translateY: yOrbsSlow, // Added parallax
         }}
         animate={{
           scale: [1, 1.2, 1],
@@ -224,16 +231,14 @@ export default function Hero() {
         <motion.div
           variants={itemVariants}
           className="mx-auto perspective-1000"
-          style={{ y }}
+          style={{ y }} // Keep the parallax scroll effect
         >
+          {/* Simplified card animation. Removed 3D tilt, added hover lift */}
           <motion.div
             className="glass card max-w-md relative"
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.02, y: -10 }} // Lifts up on hover
             animate={floatingVariants.animate}
-            style={{
-              rotateY: mousePosition.x * 0.5,
-              rotateX: -mousePosition.y * 0.5,
-            }}
+            // Removed the style={{ rotateY, rotateX }}
           >
             {/* Decorative Corner Elements */}
             <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-bl-full blur-xl" />
