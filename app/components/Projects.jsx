@@ -6,13 +6,22 @@ import { useRef, useState } from 'react';
 export default function Projects() {
   const projects = [
     {
-      title: 'F1UpToDates',
-      year: '2024',
-      description: 'Formula 1 info hub with circuits and race data.',
-      tech: ['HTML', 'CSS', 'JS'],
-      image: '/projects/F1.png',
-      live: 'https://f1-up-to-dates.vercel.app/',
-      color: 'from-red-500 to-orange-500',
+      title: 'FUXI AI',
+      year: '2025',
+      description: 'Privacy-first Chrome Extension utilizing on-device Gemini Nano AI.',
+      tech: ['React', 'Vite', 'Gemini Nano', 'Tailwind'],
+      image: '/projects/logo.png',
+      live: 'https://github.com/AyushKirtania-tech/FUXI-AI.git',
+      color: 'from-emerald-500 to-teal-500',
+    },
+    {
+      title: 'OTP Auth System',
+      year: '2025',
+      description: 'Scalable full-stack auth with SMS verification and Redis queuing.',
+      tech: ['Next.js', 'Node.js', 'Redis', 'Prisma'],
+      image: '/projects/otp.png', 
+      live: 'https://github.com/AyushKirtania-tech/otp-auth',
+      color: 'from-violet-600 to-indigo-600',
     },
     {
       title: 'Portfolio Website',
@@ -22,6 +31,15 @@ export default function Projects() {
       image: '/projects/portfolio.png',
       live: '#',
       color: 'from-blue-500 to-purple-500',
+    },
+    {
+      title: 'F1UpToDates',
+      year: '2024',
+      description: 'Formula 1 info hub with circuits and race data.',
+      tech: ['HTML', 'CSS', 'JS'],
+      image: '/projects/F1.png',
+      live: 'https://f1-up-to-dates.vercel.app/',
+      color: 'from-red-500 to-orange-500',
     },
   ];
 
