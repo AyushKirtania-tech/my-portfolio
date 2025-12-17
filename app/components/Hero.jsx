@@ -155,7 +155,7 @@ export default function Hero() {
 
           <motion.p variants={itemVariants} className="text-lg text-muted max-w-2xl leading-relaxed">
             I love turning complex problems into clean, elegant solutions.  
-            Passionate about crafting experiences with **React**, **Node**, and **Next.js** that are fast, scalable, and beautiful.
+            Passionate about crafting experiences with React,Node,and Next.js that are fast, scalable, and beautiful.
           </motion.p>
 
           {/* CTA Buttons */}
