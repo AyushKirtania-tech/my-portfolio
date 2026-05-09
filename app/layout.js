@@ -1,9 +1,9 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ['latin'] });
 
-// metadata already declared — keep as needed
 export const metadata = {
   title: 'Ayush Kirtania | Full Stack Developer Portfolio',
   description:
@@ -40,15 +40,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  // we add inter.className to <html> so font is applied everywhere
   return (
     <html lang="en" className={`${inter.className} scroll-smooth`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
-        {/* Add any additional head tags you need here (preloads, meta tags, ...). */}
       </head>
       <body>
         {children}
+        <Analytics />
       </body>
     </html>
   );
