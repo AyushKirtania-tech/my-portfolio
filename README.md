@@ -2,7 +2,8 @@
 
 A modern, responsive portfolio website built with Next.js 15, React, MongoDB, and Tailwind CSS.
 
-![Portfolio Preview](https://via.placeholder.com/1200x600/2563eb/ffffff?text=Ayush+Kirtania+Portfolio)
+![Portfolio Preview]
+https://portfolio.aayushcodes.me/
 
 ## 🚀 Features
 
