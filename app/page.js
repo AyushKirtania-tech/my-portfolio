@@ -37,7 +37,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Custom Cursor */}
+      {/* Custom Cursor — desktop only (lg:block), never rendered on mobile/touch */}
       <motion.div
         className="fixed w-8 h-8 pointer-events-none z-[9999] hidden lg:block"
         style={{
@@ -62,35 +62,33 @@ export default function HomePage() {
       <Navbar />
 
       <main className="relative">
-        {/* Hero stays in a normal section, as it has its own animations */}
-        <section id="home">
-          <Hero />
-        </section>
-        
-        {/* Replaced <section> with <SectionWrapper> */}
-        <SectionWrapper 
-          id="about" 
-          className="py-24 bg-gray-50 dark:bg-slate-900 relative overflow-hidden"
+        {/* Hero renders its own <section id="home">, so it isn't wrapped again here
+            (a duplicate id="home" would break #home anchor scrolling) */}
+        <Hero />
+
+        <SectionWrapper
+          id="about"
+          className="py-16 sm:py-24 bg-gray-50 dark:bg-slate-900 relative overflow-hidden"
         >
           <About />
         </SectionWrapper>
-        
-        <SectionWrapper 
-          id="projects" 
+
+        <SectionWrapper
+          id="projects"
           className="section bg-transparent relative overflow-hidden"
         >
           <Projects />
         </SectionWrapper>
-        
-        <SectionWrapper 
-          id="skills" 
-          className="py-24 bg-gray-50 dark:bg-slate-900 relative overflow-hidden"
+
+        <SectionWrapper
+          id="skills"
+          className="py-16 sm:py-24 bg-gray-50 dark:bg-slate-900 relative overflow-hidden"
         >
           <Skills />
         </SectionWrapper>
-        
-        <SectionWrapper 
-          id="contact" 
+
+        <SectionWrapper
+          id="contact"
           className="section relative overflow-hidden"
         >
           <Contact />
@@ -99,7 +97,7 @@ export default function HomePage() {
 
       {/* Enhanced Footer */}
       <motion.footer
-        className="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 py-12 relative overflow-hidden"
+        className="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 py-10 sm:py-12 relative overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -114,7 +112,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Copyright */}
             <motion.div
-              className="text-gray-600 dark:text-gray-400 text-sm"
+              className="text-gray-600 dark:text-gray-400 text-sm text-center md:text-left"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -138,7 +136,7 @@ export default function HomePage() {
 
             {/* Social Links */}
             <motion.div
-              className="flex gap-8"
+              className="flex flex-wrap justify-center gap-6 sm:gap-8"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}

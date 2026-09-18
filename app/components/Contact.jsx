@@ -68,34 +68,21 @@ export default function Contact() {
 
   return (
     <>
-      {/* Animated Background Elements */}
-      <motion.div
-        className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"
-        animate={{ scale: [1, 1.2, 1], x: [0, 50, 0], y: [0, -30, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      <motion.div
-        className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-br from-pink-400/10 to-yellow-400/10 rounded-full blur-3xl"
-        animate={{ scale: [1, 1.3, 1], x: [0, -50, 0], y: [0, 30, 0] }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-      />
+      {/* Background Elements — static, subtle */}
+      <div className="absolute top-0 left-1/4 w-72 h-72 sm:w-96 sm:h-96 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-56 h-56 sm:w-80 sm:h-80 bg-gradient-to-br from-pink-400/10 to-yellow-400/10 rounded-full blur-3xl" />
 
       <div className="container relative z-10">
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-10 sm:mb-12"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <motion.div
-            className="inline-flex items-center gap-2 mb-4"
-            animate={{ rotate: [0, 5, 0, -5, 0] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
+          <div className="inline-flex items-center gap-2 mb-4">
             <Sparkles className="w-6 h-6 text-yellow-500" />
-          </motion.div>
-          <h2 className="text-4xl font-bold">Let's Connect</h2>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold">Let's Connect</h2>
           <motion.div
             className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-3 rounded-full"
             initial={{ width: 0 }}

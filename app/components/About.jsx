@@ -7,7 +7,7 @@ export default function About() {
   const stats = [
     { label: 'Education', value: 'B.Sc. Computer Science', icon: GraduationCap },
     { label: 'Location', value: 'Kolkata, India', icon: MapPin },
-    { label: 'Experience', value: '2+ years', icon: Clock },
+    { label: 'Experience', value: '3+ years', icon: Clock },
     { label: 'Status', value: 'Available', icon: Award },
   ];
 
@@ -62,8 +62,8 @@ export default function About() {
         }}
       />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           {/* Image Section with 3D Tilt */}
           <motion.div
             ref={imageRef}
@@ -71,7 +71,7 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="relative perspective-1000"
+            className="relative perspective-1000 max-w-sm sm:max-w-md mx-auto lg:max-w-none lg:mx-0"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
           >
@@ -83,28 +83,15 @@ export default function About() {
                 transformStyle: 'preserve-3d',
               }}
             >
-              {/* Decorative Frame */}
-              <motion.div
-                className="absolute -inset-4 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-30"
-                animate={{
-                  scale: [1, 1.05, 1],
-                  rotate: [0, 2, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-              />
+              {/* Decorative Frame — static glow, no ambient motion */}
+              <div className="absolute -inset-4 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-20" />
 
-              {/* Removed `transform rotate-3` for a cleaner 3D tilt */}
               <motion.div
                 className="rounded-2xl overflow-hidden border-4 border-gray-900 dark:border-slate-700 relative z-10"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.4 }}
               >
-                {/* Removed counter-rotation `-rotate-3` */}
-                <div className="bg-gray-900 h-96 flex items-center justify-center relative overflow-hidden">
+                <div className="bg-gray-900 h-64 sm:h-80 md:h-96 flex items-center justify-center relative overflow-hidden">
                   <motion.img
                     src="/Profile_pic.jpeg"
                     alt="Ayush"
@@ -114,7 +101,7 @@ export default function About() {
                     }}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.6 }}
-                    style={{ transformStyle: 'preserve-3d' }} 
+                    style={{ transformStyle: 'preserve-3d' }}
                   />
 
                   {/* Image Overlay Effect */}
@@ -129,14 +116,14 @@ export default function About() {
 
               {/* Floating Badge */}
               <motion.div
-                className="absolute -bottom-4 -right-4 bg-white dark:bg-slate-800 rounded-xl p-3 shadow-2xl border-2 border-blue-500"
+                className="absolute -bottom-4 -right-4 bg-white dark:bg-slate-800 rounded-xl p-2.5 sm:p-3 shadow-2xl border-2 border-blue-500"
                 initial={{ scale: 0, rotate: -180 }}
                 whileInView={{ scale: 1, rotate: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
                 whileHover={{ scale: 1.1, rotate: 5 }}
               >
-                <Award className="w-8 h-8 text-blue-500" />
+                <Award className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500" />
               </motion.div>
             </motion.div>
           </motion.div>
@@ -151,7 +138,7 @@ export default function About() {
           >
             <div>
               <motion.h2
-                className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -167,7 +154,7 @@ export default function About() {
               />
             </div>
 
-            <div className="text-gray-700 dark:text-gray-300 space-y-4 text-lg">
+            <div className="text-gray-700 dark:text-gray-300 space-y-4 text-base sm:text-lg">
               {[
                 "I'm a 3rd-year Computer Science student with a passion for building scalable, delightful web experiences. I enjoy translating product ideas into polished, production-ready apps.",
                 'My primary focus is the MERN stack, where I emphasize clean architecture, accessibility, and performance.',
@@ -196,7 +183,7 @@ export default function About() {
 
             {/* Stats Grid with Animations */}
             <motion.div
-              className="grid grid-cols-2 gap-4 mt-6"
+              className="grid grid-cols-2 gap-3 sm:gap-4 mt-6"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -211,7 +198,7 @@ export default function About() {
               {stats.map((s, i) => (
                 <motion.div
                   key={i}
-                  className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-gray-100 dark:border-slate-700 relative overflow-hidden group"
+                  className="bg-white dark:bg-slate-800 rounded-lg p-3 sm:p-4 border border-gray-100 dark:border-slate-700 relative overflow-hidden group"
                   variants={{
                     hidden: { opacity: 0, y: 20, scale: 0.9 },
                     visible: { opacity: 1, y: 0, scale: 1 },
@@ -237,14 +224,14 @@ export default function About() {
                     whileHover={{ rotate: 360, scale: 1.2 }}
                     transition={{ duration: 0.6 }}
                   >
-                    <s.icon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                    <s.icon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 dark:text-indigo-400" />
                   </motion.div>
 
-                  <div className="text-sm text-gray-500 uppercase tracking-wider relative z-10">
+                  <div className="text-xs sm:text-sm text-gray-500 uppercase tracking-wider relative z-10">
                     {s.label}
                   </div>
                   <motion.div
-                    className="text-lg font-semibold text-gray-900 dark:text-white relative z-10"
+                    className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white relative z-10"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: i * 0.1 + 0.2 }}
@@ -272,21 +259,12 @@ export default function About() {
               whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
             >
               <div className="flex items-center gap-3">
-                <motion.div
-                  animate={{
-                    rotate: [0, 360],
-                  }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: 'linear',
-                  }}
-                >
+                <div className="shrink-0">
                   <Award className="w-6 h-6 text-yellow-500" />
-                </motion.div>
-                <div>
-                  <div className="font-semibold text-gray-900 dark:text-white">Recent Achievement</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                </div>
+                <div className="min-w-0">
+                  <div className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base">Recent Achievement</div>
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     Hackathon Winner at ICDMAI 2025
                   </div>
                 </div>

@@ -48,15 +48,15 @@ export default function Skills() {
         }}
       />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10" ref={ref}>
         {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Skills & Tools
           </h2>
           <motion.div
@@ -69,7 +69,7 @@ export default function Skills() {
 
         {/* Skills Grid */}
         <motion.div
-          className="flex flex-wrap justify-center items-center gap-6 md:gap-8"
+          className="flex flex-wrap justify-center items-start gap-x-5 gap-y-8 sm:gap-x-6 md:gap-x-8"
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
           variants={{
@@ -99,11 +99,11 @@ export default function Skills() {
                   stiffness: 200,
                 }}
                 whileHover={{
-                  scale: 1.2,
-                  y: -8,
+                  scale: 1.1,
+                  y: -6,
                   transition: { duration: 0.2 },
                 }}
-                className="group relative"
+                className="group relative w-16 sm:w-20"
               >
                 <div className="flex flex-col items-center gap-2">
                   {/* Icon Container */}
@@ -122,7 +122,6 @@ export default function Skills() {
                       }}
                     />
 
-                    {/* Simplified hover animation */}
                     <motion.img
                       src={iconUrl}
                       alt={`${skill.name} icon`}
@@ -150,17 +149,12 @@ export default function Skills() {
                     />
                   </div>
 
-                  {/* Skill Name */}
-                  <motion.span
-                    className="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute -bottom-8 whitespace-nowrap"
-                    initial={{ y: -10 }}
-                    whileHover={{ y: 0 }}
-                  >
+                  {/* Skill Name — always visible (not hover-only), since hover
+                      reveals never trigger on touch devices */}
+                  <span className="text-[11px] sm:text-xs font-medium text-gray-600 dark:text-gray-400 text-center leading-tight">
                     {skill.name}
-                  </motion.span>
+                  </span>
                 </div>
-
-                {/* Floating Particle Removed */}
               </motion.div>
             );
           })}
@@ -168,18 +162,18 @@ export default function Skills() {
 
         {/* Languages Section */}
         <motion.div
-          className="mt-20 text-center"
+          className="mt-14 sm:mt-20 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8 }}
         >
-          <div className="inline-flex items-center gap-3 bg-white dark:bg-slate-800 px-6 py-4 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700">
-            <span className="text-2xl">🌍</span>
-            <div className="text-left">
+          <div className="inline-flex items-center gap-3 bg-white dark:bg-slate-800 px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700 max-w-full">
+            <span className="text-2xl shrink-0">🌍</span>
+            <div className="text-left min-w-0">
               <div className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
                 Languages
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 English (Fluent) • Bengali (Native) • Hindi (Fluent)
               </div>
             </div>

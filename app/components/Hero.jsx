@@ -1,302 +1,178 @@
 'use client';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { ArrowRight, Github, Linkedin, Mail, Sparkles, Code } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Github, Linkedin, Mail, Sparkles } from 'lucide-react';
 
 export default function Hero() {
-  const containerRef = useRef(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
-
-  const yOrbs = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const yOrbsSlow = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const springConfig = { stiffness: 150, damping: 15 };
-  const x = useSpring(useTransform(scrollYProgress, [0, 1], [0, -50]), springConfig);
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      const { innerWidth, innerHeight } = window;
-      const x = (clientX / innerWidth - 0.5) * 20;
-      const y = (clientY / innerHeight - 0.5) * 20;
-      setMousePosition({ x, y });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.15,
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 24 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.5,
         ease: [0.25, 0.8, 0.25, 1],
       },
     },
   };
 
-  const floatingVariants = {
-    animate: {
-      y: [0, -15, 0],
-      transition: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
-    },
-  };
-
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* 🔮 Dynamic Background Orbs */}
-      <motion.div
-        className="absolute -left-24 -top-16 w-96 h-96 rounded-full opacity-25 blur-3xl pointer-events-none"
-        style={{
-          background: 'linear-gradient(120deg,#6366f1,#ec4899)',
-          x: mousePosition.x * 0.6,
-          y: mousePosition.y * 0.6,
-          translateY: yOrbs,
-        }}
-        animate={{
-          scale: [1, 1.1, 1],
-          rotate: [0, 360, 0],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+      {/* Two soft, static background blobs — no motion, kept subtle */}
+      <div
+        className="absolute -left-24 -top-16 w-72 h-72 sm:w-96 sm:h-96 rounded-full opacity-20 blur-3xl pointer-events-none"
+        style={{ background: 'linear-gradient(120deg,#6366f1,#ec4899)' }}
       />
-      <motion.div
-        className="absolute -right-20 bottom-0 w-72 h-72 rounded-full opacity-25 blur-3xl pointer-events-none"
-        style={{
-          background: 'linear-gradient(120deg,#f59e0b,#ec4899)',
-          x: mousePosition.x * -0.3,
-          y: mousePosition.y * -0.3,
-          translateY: yOrbsSlow,
-        }}
-        animate={{
-          scale: [1, 1.15, 1],
-          rotate: [0, -360, 0],
-        }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+      <div
+        className="absolute -right-20 bottom-0 w-56 h-56 sm:w-72 sm:h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
+        style={{ background: 'linear-gradient(120deg,#f59e0b,#ec4899)' }}
       />
 
-      {/* ✨ Floating particles */}
-      {[...Array(12)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-20"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -60, 0],
-            opacity: [0.2, 0.6, 0.2],
-            scale: [1, 1.4, 1],
-          }}
-          transition={{
-            duration: 3 + Math.random() * 4,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-            ease: 'easeInOut',
-          }}
-        />
-      ))}
-
-      {/* 🌟 Main Container */}
       <motion.div
-        ref={containerRef}
-        className="container z-10 mx-auto px-6 py-36 grid lg:grid-cols-2 gap-10 items-center"
+        className="container z-10 mx-auto px-4 sm:px-6 py-24 sm:py-28 lg:py-32 grid lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-14 items-center"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* 👋 Left Section */}
-        <div className="space-y-7">
+        {/* Left — the only place CTAs live, so nothing is duplicated below */}
+        <div className="space-y-5 sm:space-y-6">
           <motion.div
             variants={itemVariants}
-            className="inline-flex items-center gap-3 glass px-4 py-2 rounded-full"
-            whileHover={{ scale: 1.05 }}
+            className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full"
           >
-            <Sparkles className="w-4 h-4 text-blue-400" />
-            <span className="text-sm text-muted">Open to internships & freelance</span>
+            <Sparkles className="w-4 h-4 text-blue-400 shrink-0" />
+            <span className="text-xs sm:text-sm text-muted">Open to internships & freelance</span>
           </motion.div>
 
-          <motion.h1 variants={itemVariants} className="text-5xl md:text-6xl font-extrabold leading-tight">
-            <span className="block text-lg mb-2 font-medium text-gray-500 dark:text-gray-400">
+          <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+            <span className="block text-base sm:text-lg mb-2 font-medium text-gray-500 dark:text-gray-400">
               👋 Hey there, I'm
             </span>
-            <motion.span
-              className="gradient-text block relative"
-              whileHover={{ scale: 1.02 }}
-              animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
-            >
-              Ayush Kirtania
-              <motion.span
-                className="absolute -bottom-1 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 via-purple-500 to-yellow-200 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: '100%' }}
-                transition={{ duration: 1.2, ease: 'easeInOut', delay: 1 }}
-              />
-            </motion.span>
-            <motion.span className="block text-3xl md:text-4xl mt-3 text-muted" variants={itemVariants}>
+            <span className="gradient-text block">Ayush Kirtania</span>
+            <span className="block text-2xl sm:text-3xl md:text-4xl mt-2 text-muted">
               Full Stack Developer
-            </motion.span>
+            </span>
           </motion.h1>
 
-          <motion.p variants={itemVariants} className="text-lg text-muted max-w-2xl leading-relaxed">
-            I love turning complex problems into clean, elegant solutions.  
-            Passionate about crafting experiences with React,Node,and Next.js that are fast, scalable, and beautiful.
+          <motion.p variants={itemVariants} className="text-base sm:text-lg text-muted max-w-xl leading-relaxed">
+            I love turning complex problems into clean, elegant solutions — crafting
+            experiences with React, Node, and Next.js that are fast, scalable, and beautiful.
           </motion.p>
 
-          {/* CTA Buttons */}
-          <motion.div variants={itemVariants} className="flex gap-4 flex-wrap">
-            <motion.a
+          <motion.p variants={itemVariants} className="text-sm text-muted">
+            4th-year CS student, Scottish Church College · Hackathon winner (ICDMAI 2025)
+          </motion.p>
+
+          {/* The only CTA row in the whole Hero */}
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-3 pt-1">
+            <a
               href="#projects"
-              className="btn btn-primary flex items-center gap-2"
+              className="btn btn-primary justify-center gap-2 w-full sm:w-auto"
               aria-label="View Projects"
-              whileHover={{ scale: 1.07, x: 6 }}
-              whileTap={{ scale: 0.95 }}
             >
               View Projects <ArrowRight className="w-4 h-4" />
-            </motion.a>
-
-            <motion.a
+            </a>
+            <a
               href="#contact"
-              className="btn btn-outline"
+              className="btn btn-outline justify-center w-full sm:w-auto"
               aria-label="Contact me"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               Get in Touch
-            </motion.a>
+            </a>
           </motion.div>
 
-          {/* Socials */}
-          <motion.div variants={itemVariants} className="flex gap-3 mt-8">
+          {/* Socials + resume, one compact row — nothing repeated further down */}
+          <motion.div variants={itemVariants} className="flex items-center gap-3 pt-2">
             {[
               { href: 'https://github.com/AyushKirtania-tech', icon: Github, label: 'GitHub' },
               { href: 'https://www.linkedin.com/in/ayush-kirtania-45464021a', icon: Linkedin, label: 'LinkedIn' },
               { href: 'mailto:ayushkirtania@gmail.com', icon: Mail, label: 'Email' },
-            ].map((social, i) => (
-              <motion.a
-                key={i}
+            ].map((social) => (
+              <a
+                key={social.label}
                 href={social.href}
                 target="_blank"
                 rel="noreferrer"
-                className="glass p-3 rounded-full hover:shadow-[0_0_20px_rgba(147,197,253,0.2)]"
-                whileHover={{ scale: 1.2, rotate: 8 }}
-                whileTap={{ scale: 0.9 }}
+                aria-label={social.label}
+                className="glass p-3 rounded-full"
               >
                 <social.icon className="w-5 h-5" />
-              </motion.a>
+              </a>
             ))}
+            <a
+              href="/Resume/Ayush_Kirtania_CV.pdf"
+              download
+              className="text-sm font-medium text-muted hover:text-[var(--accent)] underline underline-offset-4 ml-1"
+            >
+              Download résumé
+            </a>
           </motion.div>
         </div>
 
-        {/* 💳 Right: Dynamic Profile Card */}
-        <motion.div
-          variants={itemVariants}
-          className="mx-auto perspective-1000"
-          style={{ y }}
-        >
-          <motion.div
-            className="glass card max-w-md relative"
-            whileHover={{ scale: 1.03, y: -10 }}
-            animate={floatingVariants.animate}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl blur-lg" />
-
-            <div className="flex items-center gap-4 relative z-10">
-              <motion.div
-                className="w-24 h-24 rounded-xl overflow-hidden border-2 border-gradient-to-r from-blue-500 to-purple-500 shadow-lg"
-                whileHover={{ scale: 1.1, rotate: 3 }}
-              >
+        {/* Right — profile card, desktop/tablet only. On mobile this was
+            duplicating the left column's info and CTAs, which is exactly
+            what made the page feel crowded, so it's hidden below lg. */}
+        <motion.div variants={itemVariants} className="hidden lg:block mx-auto w-full max-w-md">
+          <div className="glass card">
+            <div className="flex items-center gap-4">
+              <div className="w-20 h-20 shrink-0 rounded-xl overflow-hidden border-2 border-blue-500/40 shadow-lg">
                 <img
                   src="/Profile_pic.jpeg"
                   alt="Ayush Kirtania"
                   className="w-full h-full object-cover"
                   onError={(e) => (e.currentTarget.src = '/placeholder-avatar.png')}
                 />
-              </motion.div>
-
-              <div>
-                <motion.div className="text-lg font-semibold" whileHover={{ x: 5 }}>
-                  Ayush Kirtania
-                </motion.div>
+              </div>
+              <div className="min-w-0">
+                <div className="text-lg font-semibold truncate">Ayush Kirtania</div>
                 <div className="text-sm text-muted">MERN · React · Node · Tailwind</div>
               </div>
             </div>
 
-            <motion.div
-              className="mt-4 text-sm text-muted relative z-10"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              3rd-year Computer Science student at Scottish Church College. Hackathon winner (ICDMAI 2025).
-            </motion.div>
+            <p className="mt-4 text-sm text-muted leading-relaxed">
+              Building scalable, delightful web experiences — with a growing side project
+              in independent brand design (DRIPDUO).
+            </p>
 
-            <motion.div
-              className="mt-6 flex gap-3 relative z-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+            <a
+              href="#skills"
+              className="btn btn-ghost w-full justify-center mt-5"
             >
-              <motion.a
-                href="#skills"
-                className="btn btn-primary flex-1 text-center shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(147,51,234,0.4)] transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Code className="w-4 h-4 mr-1" />
-                Know My Skills
-              </motion.a>
-              <motion.a
-                href="/Resume/Ayush_Kirtania_CV.pdf"
-                className="btn btn-ghost"
-                download
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Resume
-              </motion.a>
-            </motion.div>
-          </motion.div>
+              See my skills
+            </a>
+          </div>
         </motion.div>
       </motion.div>
 
-      {/* 🖱 Scroll Indicator */}
+      {/* Scroll Indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.6 }}
+        className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.6 }}
       >
-        <motion.a
-          href="#about"
-          className="flex flex-col items-center gap-2 cursor-pointer"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
+        <a href="#about" className="flex flex-col items-center gap-2 cursor-pointer">
           <span className="text-xs text-muted uppercase tracking-wider">Scroll</span>
-          <div className="w-6 h-10 border-2 border-muted/30 rounded-full flex justify-center pt-2">
+          <motion.div
+            className="w-6 h-10 border-2 border-muted/30 rounded-full flex justify-center pt-2"
+          >
             <motion.div
               className="w-1 h-3 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
             />
-          </div>
-        </motion.a>
+          </motion.div>
+        </a>
       </motion.div>
     </section>
   );
