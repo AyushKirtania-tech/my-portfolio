@@ -128,7 +128,6 @@ export default function Projects() {
           ))}
         </ul>
         <p className="note">
-          Hover a project (or scroll through them on your phone) and the whole page takes on its palette.{' '}
           <a href="https://github.com/AyushKirtania-tech" target="_blank" rel="noopener noreferrer">
             More on GitHub
           </a>

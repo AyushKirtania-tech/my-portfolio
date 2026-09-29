@@ -19,8 +19,7 @@ export default function About() {
           </p>
           <p>
             I won a hackathon at ICDMAI 2025, which made me love fast collaboration and rapid
-            prototyping. Outside of that I run DRIPDUO, my own clothing label, so I design for brands
-            from the inside.
+            prototyping.
           </p>
           <div className="skills" aria-label="Skills and tools">
             {skills.map((s) => (
