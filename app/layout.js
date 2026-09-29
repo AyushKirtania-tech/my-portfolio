@@ -1,13 +1,24 @@
-import { Inter } from 'next/font/google';
+import { Bricolage_Grotesque, Figtree } from 'next/font/google';
 import './globals.css';
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from '@vercel/analytics/react';
 
-const inter = Inter({ subsets: ['latin'] });
+const display = Bricolage_Grotesque({
+  subsets: ['latin'],
+  axes: ['wdth'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const body = Figtree({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+});
 
 export const metadata = {
   title: 'Ayush Kirtania | Full Stack Developer Portfolio',
   description:
-    'Portfolio of Ayush Kirtania - Full Stack Developer specializing in MERN stack. 3rd year CS student at Scottish Church College, Kolkata.',
+    'Portfolio of Ayush Kirtania - Full Stack Developer specializing in MERN stack. Computer Science student at Scottish Church College, Kolkata.',
   keywords:
     'Ayush Kirtania, Full Stack Developer, MERN Stack, React, Node.js, MongoDB, Web Developer, Portfolio',
   authors: [{ name: 'Ayush Kirtania' }],
@@ -39,9 +50,16 @@ export const metadata = {
   },
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#2233ff',
+};
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.className} scroll-smooth`}>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
