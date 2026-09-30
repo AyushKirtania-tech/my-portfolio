@@ -134,55 +134,126 @@ h2 {
 
 /* ---------- Hero ---------- */
 .hero {
-  min-height: 100vh;
+  /* fills the first screen but never grows into a big empty void on tall windows */
+  min-height: min(100vh, 50rem);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding-top: 3rem;
-  padding-bottom: 2.5rem;
+  gap: 2rem;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 1.4rem);
+  /* leaves room for the floating dock */
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
   overflow-x: clip;
+  min-width: 0;
 }
-@supports (height: 100svh) { .hero { min-height: 100svh; } }
+@supports (height: 100svh) { .hero { min-height: min(100svh, 50rem); } }
 
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+.avail { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--ink); }
+.dot {
+  width: 0.6rem; height: 0.6rem;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-out infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 201, 60, 0.7); }
+  70% { box-shadow: 0 0 0 0.6rem rgba(255, 201, 60, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 201, 60, 0); }
+}
+.clock { font-variant-numeric: tabular-nums; }
+
+/* Pushes the name and intro to the vertical middle of the screen.
+   minmax(0, 1fr) stops the column growing with its content, which is what caused the sideways overflow.
+   Hidden until Hero.jsx has measured the name, then fades in once. */
+.hero-main {
+  margin: auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.8rem;
+  min-width: 0;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.9s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+.hero.ready .hero-main { opacity: 1; transform: none; }
+@media (scripting: none) { .hero-main { opacity: 1; transform: none; } }
+
+/* The name is fitted to the container width by Hero.jsx, which sets each word's font-size
+   and locks each line's height so the layout around it never shifts */
 .name {
+  margin: 0;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   font-family: var(--display);
   font-weight: 400;
-  line-height: 0.84;
-  letter-spacing: -0.045em;
-  margin: 0 0 0 -0.04em;
   user-select: none;
   -webkit-user-select: none;
 }
-.name .word { display: flex; flex-wrap: nowrap; max-width: 100%; }
-.name .word:nth-child(1) { font-size: min(24vw, 21rem); }
-.name .word:nth-child(2) { font-size: min(17vw, 15rem); }
+.name .wline { display: flex; align-items: flex-end; flex: none; }
+.name .word {
+  display: flex;
+  flex: none;
+  width: max-content;
+  font-size: 4rem;
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+}
 .name .vl {
   display: inline-block;
-  font-variation-settings: 'wght' 200, 'wdth' 75;
-  transition: font-variation-settings 0.12s linear;
+  font-variation-settings: 'wght' 380, 'wdth' 82;
   will-change: font-variation-settings;
 }
+@media (min-width: 900px) {
+  .name { flex-direction: row; align-items: flex-end; }
+}
+
 .hero-foot {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 2rem;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 1.5rem 2rem;
   align-items: end;
-  margin-top: 2.2rem;
   border-top: 1px solid var(--line);
   padding-top: 1.4rem;
 }
 .hero-foot p {
   margin: 0;
   max-width: 34rem;
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
-  line-height: 1.35;
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  line-height: 1.4;
   font-weight: 500;
   color: var(--ink);
 }
-.hero-foot .side { justify-self: end; text-align: right; color: var(--muted); font-size: 0.95rem; }
-.hint { color: var(--accent); }
+.hero-foot .hint { margin-top: 0.8rem; font-size: 0.9rem; font-weight: 400; color: var(--accent); }
+.h-touch { display: none; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-self: end; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-solid { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 
 /* ---------- Work ---------- */
+#work { padding-top: clamp(1.5rem, 3vw, 2.5rem); }
 .work-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .row {
   display: grid;
@@ -326,61 +397,124 @@ h2 {
 /* ---------- Tablet and phone ---------- */
 @media (max-width: 900px) {
   .about { grid-template-columns: 1fr; }
-  .portrait { max-width: 18rem; }
+  .portrait { max-width: 20rem; aspect-ratio: 4 / 5; }
 }
 
 @media (max-width: 760px) {
-  body { font-size: 1rem; }
+  body { font-size: 1rem; line-height: 1.55; }
+  section { padding: 2.75rem 0; }
+  h2 { font-size: clamp(1.75rem, 8vw, 2.3rem); margin-bottom: 1.3rem; }
 
-  /* Dock: icon-only résumé on phones */
-  .dock-link { padding: 0 0.85rem; font-size: 0.92rem; }
+  /* Dock: slimmer, icon-only résumé */
+  .dock { bottom: calc(env(safe-area-inset-bottom, 0px) + 0.7rem); padding: 0.3rem; }
+  .dock-pill { top: 0.3rem; bottom: 0.3rem; }
+  .dock-link { min-height: 2.5rem; padding: 0 0.85rem; font-size: 0.9rem; }
   .dock-cv span { display: none; }
   .dock-cv { padding: 0 0.8rem; margin-left: 0; }
 
-  /* Hero: bigger name, stacked footer */
-  .hero { padding-top: 2.5rem; padding-bottom: 2rem; }
-  .name .word:nth-child(1) { font-size: 27vw; }
-  .name .word:nth-child(2) { font-size: 19vw; }
-  .hero-foot { grid-template-columns: 1fr; gap: 1rem; margin-top: 1.6rem; }
-  .hero-foot .side { justify-self: start; text-align: left; }
+  /* Hero: tighter spacing, full-width buttons */
+  .hero { min-height: min(100vh, 42rem); gap: 1rem; padding-top: calc(env(safe-area-inset-top, 0px) + 0.9rem); padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+  @supports (height: 100svh) { .hero { min-height: min(100svh, 42rem); } }
+  #work { padding-top: 1.25rem; }
+  .hero-top { font-size: 0.85rem; }
+  .hero-main { gap: 1.1rem; }
+  .hero-foot { grid-template-columns: minmax(0, 1fr); gap: 1rem; padding-top: 1rem; }
+  .hero-foot p { font-size: 1.02rem; line-height: 1.4; }
+  .hero-foot .hint { margin-top: 0.5rem; font-size: 0.85rem; }
+  .hero-cta { justify-self: stretch; gap: 0.5rem; }
+  .hero-cta .btn { flex: 1 1 9rem; min-height: 2.75rem; padding: 0 1rem; font-size: 0.95rem; }
 
-  /* Work: single column, image under the text */
-  .row { grid-template-columns: 1fr; gap: 1rem; padding: 1.6rem 0; }
-  .row:hover, .row:focus-visible { padding-left: 0; }
-  .row h3 { font-size: clamp(2.4rem, 13vw, 3.6rem); }
-  .row-side { grid-template-columns: auto 1fr; align-items: center; }
-  .row-side img { grid-column: 1 / -1; grid-row: 2; max-height: 190px; }
+  /* Work: each project is a card. The page takes on the colours of the card in the middle
+     of the screen, and that card flips to an inverted, solid version of the same colours. */
+  .work-list { border-top: 0; display: grid; gap: 0.85rem; }
+  .row {
+    border: 1.5px solid var(--line);
+    border-radius: 22px;
+    background: transparent;
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    padding: 1.2rem 1.1rem;
+    transition: background-color 0.5s ease, border-color 0.5s ease, padding 0.35s ease;
+  }
+  @supports (background: color-mix(in srgb, red 10%, transparent)) {
+    .row { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+  }
+  .row h3, .row p, .tags span, .year, .go, .row-side img {
+    transition: color 0.5s ease, border-color 0.5s ease;
+  }
+  .row[data-active='true'] {
+    --ink: var(--c-bg);
+    --muted: var(--c-bg);
+    --line: var(--c-bg);
+    background: var(--c-ink);
+    border-color: transparent;
+  }
+  .row[data-active='true'] p { opacity: 0.88; }
+  /* small swatch in each project's own two colours, so cards stay recognisable */
+  .year::before {
+    content: '';
+    display: inline-block;
+    width: 0.85rem;
+    height: 0.85rem;
+    margin-right: 0.5rem;
+    vertical-align: -1px;
+    border-radius: 50%;
+    background: var(--c-bg);
+    border: 2px solid var(--c-ink);
+  }
+  .row:hover, .row:focus-visible { padding-left: 1.1rem; }
+  .row h3 { font-size: clamp(2rem, 11vw, 2.9rem); margin-bottom: 0.5rem; }
+  .row p { font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.7rem; }
+  .tags { gap: 0.3rem; }
+  .tags span { font-size: 0.78rem; padding: 0.1rem 0.6rem; }
+  .row-side { grid-template-columns: auto 1fr; align-items: center; gap: 0.5rem 0.8rem; }
+  .row-side img { grid-column: 1 / -1; grid-row: 2; max-height: 130px; border-radius: 12px; }
   .row-side .go { justify-self: end; }
+  .note { margin-top: 1rem; }
 
-  /* About */
-  .portrait { max-width: 14rem; }
-  .about p { font-size: 1.08rem; }
+  /* About: larger portrait, denser text and pills */
+  .about { gap: 1.4rem; }
+  .portrait { max-width: 18rem; }
+  .about p { font-size: 1rem; margin-bottom: 0.9rem; }
+  .skills { gap: 0.4rem; margin-top: 1.2rem; }
+  .skills span { font-size: 0.82rem; padding: 0.25rem 0.7rem; }
+  .about .langs { margin-top: 1rem; }
 
-  /* Contact */
+  /* Contact: compact form */
   .mail { font-size: clamp(1.3rem, 6.2vw, 2.4rem); }
-  .contact-lead { margin: 1.2rem 0 2rem; }
-  .send { width: 100%; }
+  .contact-lead { margin: 1rem 0 1.5rem; }
+  .form { gap: 0.3rem; }
+  .form label { margin-top: 0.5rem; }
+  .form input, .form textarea { padding: 0.55rem 0; }
+  .form textarea { min-height: 6rem; }
+  .send { width: 100%; margin-top: 1rem; }
+  .status { min-height: 1.2rem; margin-top: 0.5rem; }
+
+  /* Footer */
+  .site-footer { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
+  .foot { padding-top: 0.8rem; }
+  .foot-links a { min-height: 2.25rem; }
 }
 
 @media (max-width: 380px) {
   .dock-link { padding: 0 0.7rem; font-size: 0.86rem; }
-  .name .word:nth-child(1) { font-size: 26vw; }
-  .name .word:nth-child(2) { font-size: 18vw; }
   .tags span, .skills span { font-size: 0.8rem; padding-left: 0.65rem; padding-right: 0.65rem; }
 }
 
 /* Short landscape phones: don't force a full-screen hero */
 @media (max-height: 480px) and (orientation: landscape) {
-  .hero { min-height: auto; padding-top: 2rem; }
-  .name .word:nth-child(1) { font-size: min(16vw, 9rem); }
-  .name .word:nth-child(2) { font-size: min(11vw, 6.5rem); }
+  .hero { min-height: auto; padding-top: 1.2rem; }
 }
 
 /* Touch devices: hover effects that stick after a tap are switched off */
 @media (hover: none) {
-  .row:hover, .row:focus-visible { padding-left: 0; }
+  .h-mouse { display: none; }
+  .h-touch { display: inline; }
   .send:hover:not(:disabled) { transform: none; }
   .row:active { opacity: 0.85; }
+}
+@media (hover: none) and (min-width: 761px) {
+  .row:hover, .row:focus-visible { padding-left: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
